@@ -19,10 +19,16 @@ public class Tester
         transaction.begin();
 
         Customer customer = new Customer("Thomas", "Vestergaard");
-        customer.addAddress(new Address("Møllevangen 23", "Birkerød"));
+        Address  address  = new Address("Møllevangen 23", "Birkerød");
+        customer.addAddress(address);
+        address.setCustomer(customer);
 
         em.persist(customer);
-
         transaction.commit();
+
+        Customer find = em.find(Customer.class, 1);
+        System.out.println(find);
+        System.out.println(find.getAddresses().get(0));
+        System.out.println(find.getAddresses().get(0).getCustomer());
     }
 }
