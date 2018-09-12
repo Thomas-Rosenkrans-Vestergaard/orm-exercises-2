@@ -18,8 +18,8 @@ public class Tester
         EntityTransaction    transaction = em.getTransaction();
         transaction.begin();
 
-        Customer customer = new Customer("Thomas", "Vestergaard", null);
-        customer.setAddress(new Address("Møllevangen 23", "Birkerød", customer));
+        Customer customer = new Customer("Thomas", "Vestergaard");
+        customer.addAddress(new Address("Møllevangen 23", "Birkerød"));
 
         em.persist(customer);
 

@@ -3,6 +3,8 @@ package com.tvestergaard.exercises.data;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Customer
@@ -14,20 +16,26 @@ public class Customer
     private String firstName;
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
-    private Address address;
+    @JoinColumn(name = "customer")
+    private List<Address> addresses = new ArrayList<>();
 
     public Customer()
     {
 
     }
 
-    public Customer(String firstName, String lastName, Address address)
+    public Customer(String firstName, String lastName, List<Address> addresses)
     {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
+        this.addresses = addresses;
+    }
+
+    public Customer(String firstName, String lastName)
+    {
+        this(firstName, lastName, new ArrayList<>());
     }
 
     public int getId()
@@ -45,9 +53,9 @@ public class Customer
         return this.lastName;
     }
 
-    public Address getAddress()
+    public List<Address> getAddresses()
     {
-        return this.address;
+        return this.addresses;
     }
 
     public void setId(int id)
@@ -65,8 +73,13 @@ public class Customer
         this.lastName = lastName;
     }
 
-    public void setAddress(Address address)
+    public void addAddress(Address address)
     {
-        this.address = address;
+        this.addresses.add(address);
+    }
+
+    public void setAddresses(List<Address> addresses)
+    {
+        this.addresses = addresses;
     }
 }

@@ -1,8 +1,9 @@
 package com.tvestergaard.exercises.data;
 
-import org.hibernate.annotations.GeneratorType;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Address
@@ -10,23 +11,19 @@ public class Address
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int    id;
     private String street;
     private String city;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customer customer;
 
     public Address()
     {
 
     }
 
-    public Address(String street, String city, Customer customer)
+    public Address(String street, String city)
     {
         this.street = street;
         this.city = city;
-        this.customer = customer;
     }
 
     public int getId()
@@ -44,11 +41,6 @@ public class Address
         return this.city;
     }
 
-    public Customer getCustomer()
-    {
-        return this.customer;
-    }
-
     public void setId(int id)
     {
         this.id = id;
@@ -62,10 +54,5 @@ public class Address
     public void setCity(String city)
     {
         this.city = city;
-    }
-
-    public void setCustomer(Customer customer)
-    {
-        this.customer = customer;
     }
 }
