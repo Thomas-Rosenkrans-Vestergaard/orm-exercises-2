@@ -1,5 +1,7 @@
 package com.tvestergaard.exercises.data;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Customer
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
     private Address address;
 
     public Customer()
@@ -42,6 +45,11 @@ public class Customer
         return this.lastName;
     }
 
+    public Address getAddress()
+    {
+        return this.address;
+    }
+
     public void setId(int id)
     {
         this.id = id;
@@ -55,5 +63,10 @@ public class Customer
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.address = address;
     }
 }
