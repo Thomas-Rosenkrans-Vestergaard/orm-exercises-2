@@ -1,10 +1,9 @@
 package com.tvestergaard.exercises.data;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Customer
@@ -16,9 +15,8 @@ public class Customer
     private String firstName;
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @Cascade(value = org.hibernate.annotations.CascadeType.REMOVE)
-    @JoinColumn(name = "customer")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "customer_address")
     private List<Address> addresses = new ArrayList<>();
 
     public Customer()
@@ -73,13 +71,30 @@ public class Customer
         this.lastName = lastName;
     }
 
+    public void setAddresses(List<Address> addresses)
+    {
+        this.addresses = addresses;
+    }
+
     public void addAddress(Address address)
     {
         this.addresses.add(address);
     }
 
-    public void setAddresses(List<Address> addresses)
+
+    @Override public boolean equals(Object o)
     {
-        this.addresses = addresses;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id &&
+               Objects.equals(firstName, customer.firstName) &&
+               Objects.equals(lastName, customer.lastName) &&
+               Objects.equals(addresses, customer.addresses);
+    }
+
+    @Override public int hashCode()
+    {
+        return Objects.hash(id, firstName, lastName, addresses);
     }
 }

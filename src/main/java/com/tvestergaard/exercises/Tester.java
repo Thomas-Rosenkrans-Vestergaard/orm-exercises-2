@@ -1,8 +1,5 @@
 package com.tvestergaard.exercises;
 
-import com.tvestergaard.exercises.data.Address;
-import com.tvestergaard.exercises.data.Customer;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -18,17 +15,18 @@ public class Tester
         EntityTransaction    transaction = em.getTransaction();
         transaction.begin();
 
-        Customer customer = new Customer("Thomas", "Vestergaard");
-        Address  address  = new Address("Møllevangen 23", "Birkerød");
-        customer.addAddress(address);
-        address.setCustomer(customer);
+        //        Customer customer = new Customer("Thomas", "Vestergaard");
+        //        Address  address  = new Address("Møllevangen 23", "Birkerød");
+        //        customer.addAddress(address);
+        //        address.addCustomer(customer);
 
-        em.persist(customer);
+        //        em.persist(customer);
+
         transaction.commit();
 
-        Customer find = em.find(Customer.class, 1);
-        System.out.println(find);
-        System.out.println(find.getAddresses().get(0));
-        System.out.println(find.getAddresses().get(0).getCustomer());
+        //        Customer find = em.find(Customer.class, 1);
+        //        System.out.println(find);
+        //        System.out.println(find.getAddresses().get(0));
+        //        System.out.println(find.getAddresses().get(0).getCustomers().get(0));
     }
 }

@@ -1,6 +1,8 @@
 package com.tvestergaard.exercises.data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Address
@@ -12,18 +14,24 @@ public class Address
     private String street;
     private String city;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customer customer;
+    @ManyToMany(mappedBy = "addresses")
+    private List<Customer> customers = new ArrayList<>();
 
     public Address()
     {
 
     }
 
-    public Address(String street, String city)
+    public Address(String street, String city, List<Customer> customers)
     {
         this.street = street;
         this.city = city;
+        this.customers = customers;
+    }
+
+    public Address(String street, String city)
+    {
+        this(street, city, new ArrayList<>());
     }
 
     public int getId()
@@ -41,9 +49,9 @@ public class Address
         return this.city;
     }
 
-    public Customer getCustomer()
+    public List<Customer> getCustomers()
     {
-        return this.customer;
+        return this.customers;
     }
 
     public void setId(int id)
@@ -61,8 +69,13 @@ public class Address
         this.city = city;
     }
 
-    public void setCustomer(Customer customer)
+    public void setCustomers(List<Customer> customers)
     {
-        this.customer = customer;
+        this.customers = customers;
+    }
+
+    public void addCustomer(Customer customer)
+    {
+        customers.add(customer);
     }
 }
